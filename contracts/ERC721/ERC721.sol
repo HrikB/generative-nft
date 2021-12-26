@@ -10,6 +10,7 @@ import "./utils/Address.sol";
 import "./utils/Context.sol";
 import "./utils/Strings.sol";
 import "./utils/introspection/ERC165.sol";
+import "hardhat/console.sol";
 
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
