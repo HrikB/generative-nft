@@ -89,6 +89,7 @@ describe("GenArt", function () {
     it("Should set ERC721 _name and _symbol variables", async () => {
       const actualName = await genArtDeploy.name();
       const actualSymbol = await genArtDeploy.symbol();
+      console.log(actualName);
       expect(actualName).to.equal(artName);
       expect(actualSymbol).to.equal(artSymbol);
     });
@@ -105,6 +106,9 @@ describe("GenArt", function () {
 
     it("Should implement the ERC721Metadata interface", async () => {
       expect(await erc721.supportsInterface("0x5b5e139f")).to.equal(true);
+    });
+    it("Should implement the ERC721Enumerable interface", async () => {
+      expect(await erc721.supportsInterface("0x780e9d63")).to.equal(true);
     });
   });
 });

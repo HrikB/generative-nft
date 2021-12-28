@@ -598,7 +598,7 @@ contract ERC721 is
     function _addTokenToOwnerEnumeration(address to, uint256 tokenId) private {
         uint256 length = ERC721.balanceOf(to);
         _ownedTokens[to][length] = tokenId;
-        _ownerTokensIndex[tokenId] = length;
+        _ownedTokensIndex[tokenId] = length;
     }
 
     /**
@@ -632,7 +632,7 @@ contract ERC721 is
             uint256 lastTokenId = _ownedTokens[from][lastTokenIndex];
 
             _ownedTokens[from][tokenIndex] = lastTokenId; // Move the last token to the slot of the to-delete token
-            _ownedTokens[lastTokenId] = tokenId; // Update the moved token's index
+            _ownedTokensIndex[lastTokenId] = tokenId; // Update the moved token's index
         }
 
         // This also deletes the contents at the last position of the array

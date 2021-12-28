@@ -361,8 +361,8 @@
       ]
     },
     "/home/EthProjects/generative-nft/contracts/ERC721/ERC721.sol": {
-      "lastModificationDate": 1640488129720,
-      "contentHash": "3915a41d6c68e404acb87076585cbeee",
+      "lastModificationDate": 1640715002752,
+      "contentHash": "3fa420f7b92d94f2e2f86b212c39f517",
       "sourceName": "contracts/ERC721/ERC721.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -391,6 +391,7 @@
         "./IERC721.sol",
         "./IERC721Receiver.sol",
         "./extensions/IERC721Metadata.sol",
+        "./extensions/IERC721Enumerable.sol",
         "./utils/Address.sol",
         "./utils/Context.sol",
         "./utils/Strings.sol",
@@ -402,6 +403,43 @@
       ],
       "artifacts": [
         "ERC721"
+      ]
+    },
+    "/home/EthProjects/generative-nft/contracts/ERC721/extensions/IERC721Enumerable.sol": {
+      "lastModificationDate": 1640668102967,
+      "contentHash": "09420d800ea4623629d303174115e0bd",
+      "sourceName": "contracts/ERC721/extensions/IERC721Enumerable.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Enumerable"
       ]
     }
   }
