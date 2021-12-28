@@ -5,7 +5,7 @@ import "./ERC721/ERC721.sol";
 import "hardhat/console.sol";
 
 contract GenArt is ERC721 {
-    constructor(string memory _name, string memory _symbol) {
-        super(_name, _symbol);
-    }
+    constructor(string memory _name, string memory _symbol)
+        ERC721(_name, _symbol)
+    {}
 }

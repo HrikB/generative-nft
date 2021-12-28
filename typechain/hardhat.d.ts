@@ -36,6 +36,10 @@ declare module "hardhat/types/runtime" {
       name: "IERC165",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
+    getContractFactory(
+      name: "GenArt",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.GenArt__factory>;
 
     getContractAt(
       name: "ERC721",
@@ -67,6 +71,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
+    getContractAt(
+      name: "GenArt",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.GenArt>;
 
     // default types
     getContractFactory(
