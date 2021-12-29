@@ -21,6 +21,10 @@ contract GenArt is ERC721 {
         MAX_SUPPLY = maxNftSupply;
     }
 
+    function activateSale() external {
+        isSaleActive = true;
+    }
+
     function mintArt(uint256 numOfTokens) public payable {
         require(isSaleActive, "The sale must be active to mint");
         require(numOfTokens <= maxMintAmt, "Can only mint 10 tokens at a time");
@@ -36,7 +40,7 @@ contract GenArt is ERC721 {
         for (uint256 i = 0; i < numOfTokens; i++) {
             uint256 mintIndex = totalSupply();
             if (totalSupply() < MAX_SUPPLY) {
-                _safeMint(msg.sender, mintIndex);
+                _safeMint(msg.sender, mintIndex + i);
             }
         }
     }

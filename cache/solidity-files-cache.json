@@ -323,8 +323,8 @@
       ]
     },
     "/home/EthProjects/generative-nft/contracts/GenArt.sol": {
-      "lastModificationDate": 1640551785621,
-      "contentHash": "21b0c9c27e68381232754d0c0f0f8d57",
+      "lastModificationDate": 1640737465833,
+      "contentHash": "a7450d022c8f26ff1c3769dda3499437",
       "sourceName": "contracts/GenArt.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -361,8 +361,8 @@
       ]
     },
     "/home/EthProjects/generative-nft/contracts/ERC721/ERC721.sol": {
-      "lastModificationDate": 1640715002752,
-      "contentHash": "3fa420f7b92d94f2e2f86b212c39f517",
+      "lastModificationDate": 1640737670923,
+      "contentHash": "557c5a9259ab1ce385779bc5004c2dcb",
       "sourceName": "contracts/ERC721/ERC721.sol",
       "solcConfig": {
         "version": "0.8.4",

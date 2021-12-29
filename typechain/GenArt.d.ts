@@ -12,6 +12,7 @@ import {
   BaseContract,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
@@ -21,10 +22,16 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface GenArtInterface extends ethers.utils.Interface {
   functions: {
+    "MAX_SUPPLY()": FunctionFragment;
+    "activateSale()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
+    "artPrice()": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "isSaleActive()": FunctionFragment;
+    "maxMintAmt()": FunctionFragment;
+    "mintArt(uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
@@ -39,9 +46,18 @@ interface GenArtInterface extends ethers.utils.Interface {
   };
 
   encodeFunctionData(
+    functionFragment: "MAX_SUPPLY",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "activateSale",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "approve",
     values: [string, BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "artPrice", values?: undefined): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "getApproved",
@@ -50,6 +66,18 @@ interface GenArtInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isSaleActive",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "maxMintAmt",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintArt",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
@@ -90,7 +118,13 @@ interface GenArtInterface extends ethers.utils.Interface {
     values: [string, string, BigNumberish]
   ): string;
 
+  decodeFunctionResult(functionFragment: "MAX_SUPPLY", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "activateSale",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "artPrice", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
@@ -100,6 +134,12 @@ interface GenArtInterface extends ethers.utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "isSaleActive",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "maxMintAmt", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mintArt", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(
@@ -208,11 +248,19 @@ export class GenArt extends BaseContract {
   interface: GenArtInterface;
 
   functions: {
+    MAX_SUPPLY(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    activateSale(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    artPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -226,6 +274,15 @@ export class GenArt extends BaseContract {
       operator: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    isSaleActive(overrides?: CallOverrides): Promise<[boolean]>;
+
+    maxMintAmt(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    mintArt(
+      numOfTokens: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -288,11 +345,19 @@ export class GenArt extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  MAX_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
+
+  activateSale(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   approve(
     to: string,
     tokenId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  artPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
   balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -306,6 +371,15 @@ export class GenArt extends BaseContract {
     operator: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  isSaleActive(overrides?: CallOverrides): Promise<boolean>;
+
+  maxMintAmt(overrides?: CallOverrides): Promise<BigNumber>;
+
+  mintArt(
+    numOfTokens: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -362,11 +436,17 @@ export class GenArt extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    MAX_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
+
+    activateSale(overrides?: CallOverrides): Promise<void>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    artPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -380,6 +460,15 @@ export class GenArt extends BaseContract {
       operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    isSaleActive(overrides?: CallOverrides): Promise<boolean>;
+
+    maxMintAmt(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mintArt(
+      numOfTokens: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -493,11 +582,19 @@ export class GenArt extends BaseContract {
   };
 
   estimateGas: {
+    MAX_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
+
+    activateSale(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    artPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -510,6 +607,15 @@ export class GenArt extends BaseContract {
       owner: string,
       operator: string,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    isSaleActive(overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxMintAmt(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mintArt(
+      numOfTokens: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -574,11 +680,19 @@ export class GenArt extends BaseContract {
   };
 
   populateTransaction: {
+    MAX_SUPPLY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    activateSale(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    artPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     balanceOf(
       owner: string,
@@ -594,6 +708,15 @@ export class GenArt extends BaseContract {
       owner: string,
       operator: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isSaleActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxMintAmt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    mintArt(
+      numOfTokens: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;

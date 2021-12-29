@@ -569,8 +569,16 @@ contract ERC721 is
         address to,
         uint256 tokenId
     ) internal virtual {
-        // if(from == address(0)) {
-        // }
+        if (from == address(0)) {
+            _addTokenToAllTokensEnumeration(tokenId);
+        } else if (from != to) {
+            _removeTokenFromOwnerEnumeration(from, tokenId);
+        }
+        if (to == address(0)) {
+            _removeTokenFromAllTokensEnumeration(tokenId);
+        } else if (to != from) {
+            _addTokenToOwnerEnumeration(to, tokenId);
+        }
     }
 
     /**

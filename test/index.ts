@@ -1,3 +1,4 @@
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { ERC721, GenArt } from "../typechain";
@@ -43,22 +44,18 @@ describe("ERC721", function () {
   });
 
   describe("balanceOf()", () => {
-    it("Should revert with 0 address query", () => {
-      expect(erc721.balanceOf(constants.AddressZero))
-        .to.be.revertedWith(
-          "Error: VM Exception while processing transaction: reverted with reason string 'ERC721: balance query for zero address'"
-        )
-        .catch((err) => {});
+    it("Should revert with 0 address query", async () => {
+      await expect(erc721.balanceOf(constants.AddressZero)).to.be.revertedWith(
+        "ERC721: balance query for zero address"
+      );
     });
   });
 
   describe("ownerOf()", () => {
-    it("Should revert if token does not exist", () => {
-      expect(erc721.ownerOf(1))
-        .to.be.revertedWith(
-          "Error: VM Exception while processing transaction: reverted with reason string 'ERC721: owner query for nonexistent token'"
-        )
-        .catch((err) => {});
+    it("Should revert if token does not exist", async () => {
+      await expect(erc721.ownerOf(1)).to.be.revertedWith(
+        "ERC721: owner query for nonexistent token"
+      );
     });
   });
 
@@ -77,19 +74,26 @@ let GenArtContr;
 let genArtDeploy: GenArt;
 const artName = "Rasha Collection";
 const artSymbol = "RSHC";
+const MAX_SUPPLY = 9;
+const MINT_PRICE = 0.1;
+console.log(MINT_PRICE);
+let accounts;
+let minter1: SignerWithAddress;
 
 describe("GenArt", function () {
   beforeEach(async () => {
     GenArtContr = await ethers.getContractFactory("GenArt");
-    genArtDeploy = await GenArtContr.deploy(artName, artSymbol);
+    genArtDeploy = await GenArtContr.deploy(artName, artSymbol, MAX_SUPPLY);
     await genArtDeploy.deployed();
+
+    accounts = await ethers.getSigners();
+    [minter1] = accounts;
   });
 
   describe("constructor()", () => {
     it("Should set ERC721 _name and _symbol variables", async () => {
       const actualName = await genArtDeploy.name();
       const actualSymbol = await genArtDeploy.symbol();
-      console.log(actualName);
       expect(actualName).to.equal(artName);
       expect(actualSymbol).to.equal(artSymbol);
     });
@@ -109,6 +113,50 @@ describe("GenArt", function () {
     });
     it("Should implement the ERC721Enumerable interface", async () => {
       expect(await erc721.supportsInterface("0x780e9d63")).to.equal(true);
+    });
+  });
+
+  describe("mintArt()", () => {
+    it("Should fail if sale is inactive", async () => {
+      await expect(genArtDeploy.connect(minter1).mintArt(1)).to.be.revertedWith(
+        "The sale must be active to mint"
+      );
+    });
+
+    describe("If sale is active", () => {
+      beforeEach(async () => {
+        const activateSale = await genArtDeploy.activateSale();
+        activateSale.wait();
+      });
+
+      it("Should fail if mint amount is more than 10", async () => {
+        await expect(
+          genArtDeploy.connect(minter1).mintArt(11)
+        ).to.be.revertedWith("Can only mint 10 tokens at a time");
+      });
+
+      it("Should fail if the amount being minted would exceed the maximum supply", async () => {
+        await expect(
+          genArtDeploy.connect(minter1).mintArt(10)
+        ).to.be.revertedWith("Purchase would exceed maximum supply");
+      });
+
+      it("Should fail if correct amount of ether is not sent", async () => {
+        await expect(
+          genArtDeploy.connect(minter1).mintArt(1)
+        ).to.be.revertedWith("Ether value sent is not correct");
+      });
+
+      it("Should increment total supply by mint amount", async () => {
+        const amount = 7;
+        await genArtDeploy.connect(minter1).mintArt(amount, {
+          value: ethers.utils.parseUnits(
+            (MINT_PRICE * amount).toString(),
+            "ether"
+          ),
+        });
+        await expect(await genArtDeploy.totalSupply()).to.equal(amount);
+      });
     });
   });
 });
