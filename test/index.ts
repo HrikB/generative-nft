@@ -116,6 +116,17 @@ describe("GenArt", function () {
     });
   });
 
+  describe("activateSale", () => {
+    it("Should start off as false", async () => {
+      expect(await genArtDeploy.isSaleActive()).to.equal(false);
+    });
+
+    it("Should be true after function run", async () => {
+      await genArtDeploy.activateSale();
+      expect(await genArtDeploy.isSaleActive()).to.equal(true);
+    });
+  });
+
   describe("mintArt()", () => {
     it("Should fail if sale is inactive", async () => {
       await expect(genArtDeploy.connect(minter1).mintArt(1)).to.be.revertedWith(
