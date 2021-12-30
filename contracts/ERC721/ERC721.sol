@@ -76,6 +76,7 @@ contract ERC721 is
         override(ERC165, IERC165)
         returns (bool)
     {
+        console.logBytes4(type(IERC721Enumerable).interfaceId);
         return
             interfaceId == type(IERC721).interfaceId ||
             interfaceId == type(IERC721Metadata).interfaceId ||

@@ -40,7 +40,7 @@ contract GenArt is ERC721 {
         for (uint256 i = 0; i < numOfTokens; i++) {
             uint256 mintIndex = totalSupply();
             if (totalSupply() < MAX_SUPPLY) {
-                _safeMint(msg.sender, mintIndex + i);
+                _safeMint(msg.sender, mintIndex);
             }
         }
     }
