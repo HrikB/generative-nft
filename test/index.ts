@@ -1,6 +1,6 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { ethers, waffle } from "hardhat";
 import { ERC721, GenArt, GenArt__factory } from "../typechain";
 
 const { utils, constants } = ethers;
@@ -76,11 +76,11 @@ const artName = "Rasha Collection";
 const artSymbol = "RSHC";
 const MAX_SUPPLY = 12;
 const MINT_PRICE = 0.1;
-console.log(MINT_PRICE);
 let accounts;
 
 let minter1: SignerWithAddress;
 let minter2: SignerWithAddress;
+const provider = waffle.provider;
 describe("GenArt", function () {
   beforeEach(async () => {
     GenArtContr = await ethers.getContractFactory("GenArt");
@@ -226,6 +226,59 @@ describe("GenArt", function () {
 
     it("Should return total supply of 11", async () => {
       expect(await genArtDeploy.totalSupply()).to.equal(amount1 + amount2);
+    });
+  });
+
+  describe("mappings", async () => {
+    const amount1 = 2;
+    const amount2 = 4;
+
+    beforeEach(async () => {
+      genArtDeploy = await GenArtContr.deploy(artName, artSymbol, MAX_SUPPLY);
+      await genArtDeploy.deployed();
+      await genArtDeploy.activateSale();
+      await genArtDeploy.connect(minter1).mintArt(amount1, {
+        value: ethers.utils.parseUnits(
+          (MINT_PRICE * amount1).toString(),
+          "ether"
+        ),
+      });
+      await genArtDeploy.connect(minter2).mintArt(amount2, {
+        value: ethers.utils.parseUnits(
+          (MINT_PRICE * amount2).toString(),
+          "ether"
+        ),
+      });
+    });
+
+    it("Should store token owners in _owners mapping", async () => {
+      const filter = {
+        address: genArtDeploy.address,
+        topics: [utils.id("Transfer(address,address,uint256)")],
+      };
+
+      for (let i = 0; i <= amount1 + amount2; i++) {
+        if (i == amount1 + amount2) return;
+        if (i < amount1) {
+          await genArtDeploy
+            .connect(minter1)
+            ["safeTransferFrom(address,address,uint256)"](
+              minter1.address,
+              minter2.address,
+              i
+            );
+          expect(await genArtDeploy.ownerOf(i)).to.equal(minter2.address);
+        } else {
+          await genArtDeploy
+            .connect(minter2)
+            ["safeTransferFrom(address,address,uint256)"](
+              minter2.address,
+              minter1.address,
+              i
+            );
+          expect(await genArtDeploy.ownerOf(i)).to.equal(minter1.address);
+        }
+      }
     });
   });
 });
