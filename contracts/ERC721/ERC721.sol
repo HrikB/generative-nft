@@ -210,8 +210,10 @@ contract ERC721 is
 
         require(
             _msgSender() == owner || isApprovedForAll(owner, _msgSender()),
-            ""
+            "ERC721: approve caller is not owner nor approved for all"
         );
+
+        _approve(to, tokenId);
     }
 
     /**

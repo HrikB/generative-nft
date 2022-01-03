@@ -80,13 +80,14 @@ let accounts;
 
 let minter1: SignerWithAddress;
 let minter2: SignerWithAddress;
+let minter3: SignerWithAddress;
 const provider = waffle.provider;
 describe("GenArt", function () {
   beforeEach(async () => {
     GenArtContr = await ethers.getContractFactory("GenArt");
 
     accounts = await ethers.getSigners();
-    [minter1, minter2] = accounts;
+    [minter1, minter2, minter3] = accounts;
   });
 
   describe("constructor()", () => {
@@ -219,7 +220,7 @@ describe("GenArt", function () {
       ).to.be.revertedWith("ERC721: balance query for zero address");
     });
 
-    it("Should return appropriate balance of amount1 for minter1 and amount2 for minter2", async () => {
+    it("Should return appropriate balance of amount for minter1 and amount2 for minter2", async () => {
       expect(await genArtDeploy.balanceOf(minter1.address)).to.equal(amount1);
       expect(await genArtDeploy.balanceOf(minter2.address)).to.equal(amount2);
     });
@@ -279,6 +280,90 @@ describe("GenArt", function () {
           expect(await genArtDeploy.ownerOf(i)).to.equal(minter1.address);
         }
       }
+    });
+  });
+
+  describe("Approvals", () => {
+    const amount1 = 2;
+    const amount2 = 4;
+
+    beforeEach(async () => {
+      genArtDeploy = await GenArtContr.deploy(artName, artSymbol, MAX_SUPPLY);
+      await genArtDeploy.deployed();
+      await genArtDeploy.activateSale();
+      await genArtDeploy.connect(minter1).mintArt(amount1, {
+        value: ethers.utils.parseUnits(
+          (MINT_PRICE * amount1).toString(),
+          "ether"
+        ),
+      });
+      await genArtDeploy.connect(minter2).mintArt(amount2, {
+        value: ethers.utils.parseUnits(
+          (MINT_PRICE * amount2).toString(),
+          "ether"
+        ),
+      });
+    });
+
+    it("Should fail if owner is trying to approve themselves", async () => {
+      await expect(
+        genArtDeploy.connect(minter1).approve(minter1.address, 1)
+      ).to.be.revertedWith("ERC721: approval to current owner");
+    });
+
+    it("Should fail if non-owner of token is trying to approve", async () => {
+      await expect(
+        genArtDeploy.connect(minter1).approve(minter3.address, 4)
+      ).to.be.revertedWith(
+        "ERC721: approve caller is not owner nor approved for all"
+      );
+    });
+
+    it("Should update mapping on successful approval", async () => {
+      await genArtDeploy.connect(minter1).approve(minter2.address, 0);
+      expect(await genArtDeploy.getApproved(0)).to.equal(minter2.address);
+    });
+
+    it("Should allow approved to transfer item", async () => {
+      await genArtDeploy.connect(minter1).approve(minter2.address, 0);
+      await genArtDeploy
+        .connect(minter2)
+        ["safeTransferFrom(address,address,uint256)"](
+          minter1.address,
+          minter3.address,
+          0
+        );
+      expect(await genArtDeploy.ownerOf(0)).to.equal(minter3.address);
+    });
+
+    it("Should allow addresses that are Approved for all to control all their assets", async () => {
+      await genArtDeploy
+        .connect(minter2)
+        .setApprovalForAll(minter1.address, true);
+
+      for (let i = 2; i <= 4; i++) {
+        await genArtDeploy
+          .connect(minter1)
+          ["safeTransferFrom(address,address,uint256)"](
+            minter2.address,
+            minter3.address,
+            i
+          );
+        expect(await genArtDeploy.ownerOf(i)).to.equal(minter3.address);
+      }
+      await genArtDeploy
+        .connect(minter2)
+        .setApprovalForAll(minter1.address, false);
+
+      await expect(
+        genArtDeploy
+          .connect(minter1)
+          ["safeTransferFrom(address,address,uint256)"](
+            minter2.address,
+            minter3.address,
+            5
+          )
+      ).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
     });
   });
 });
