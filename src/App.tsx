@@ -1,8 +1,9 @@
 import React from "react";
+import { LandingPage } from "./Screens";
 import "./App.css";
 
 function App() {
-  return <div className="App">Hello</div>;
+  return <LandingPage />;
 }
 
 export default App;
