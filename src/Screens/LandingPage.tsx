@@ -15,7 +15,7 @@ function LandingPage() {
           <video autoPlay loop className="w-full" src={LandingVid} />
           <div className="absolute bottom-0 bg-black w-96 h-2/6 flex">
             <div className="w-9/12 mx-2 border-b-white border-b h-full flex justify-center flex-col">
-              <h1 className="text-landing-title leading-8 font-display mb-5 w-11/12">
+              <h1 className="text-landing-title leading-8 font-extrabold italic font-display mb-5 w-11/12">
                 Welcome to the Bored Ape Yacht Club
               </h1>
               <button
@@ -25,7 +25,11 @@ function LandingPage() {
                 <p className="bg-swamp text-black font-bold">Enter</p>
               </button>
             </div>
-            <div className="w-3/12 text-center">Scroll</div>
+            <div className="relative w-3/12">
+              <p className="animate-pulsefull  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap font-display font-medium italic text-scroll">
+                ← SCROLL DOWN
+              </p>
+            </div>
           </div>
         </div>
       </div>
