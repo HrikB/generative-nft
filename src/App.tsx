@@ -1,13 +1,20 @@
 import React from "react";
-import { LandingPage } from "./Screens";
-import { Header /*, Hero*/ } from "./components";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { LandingPage, HomePage } from "./Screens";
 
 function App() {
   return (
-    <>
-      <Header />
-      <LandingPage />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<HomePage />} />
+      </Routes>
+    </Router>
+
+    // <>
+    //   <Header />
+    //   <LandingPage />
+    // </>
   );
 }
 
