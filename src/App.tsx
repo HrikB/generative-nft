@@ -1,7 +1,6 @@
 import React from "react";
 import { LandingPage } from "./Screens";
-import { Header } from "./components";
-import "./App.css";
+import { Header /*, Hero*/ } from "./components";
 
 function App() {
   return (

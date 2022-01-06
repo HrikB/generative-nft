@@ -1,7 +1,35 @@
 import React from "react";
+import LandingVid from "../assets/club-landing.mp4";
+
+const QuickDesc =
+  "A limited NFT collection where the token itself doubles as your membership to a swamp club for apes. The club is open! Ape in with us.";
 
 function LandingPage() {
-  return <div>LandingPage</div>;
+  return (
+    <>
+      <div className="relative">
+        <div className="w-11/12 mx-auto h-fit mb-5">
+          <video autoPlay loop className="w-full" src={LandingVid} />
+          <div className="absolute bottom-0 bg-black w-96 h-2/6 flex">
+            <div className="w-9/12 mx-2 border-b-white border-b h-full flex justify-center flex-col">
+              <h1 className="text-landing-title leading-8 font-display mb-5 w-11/12">
+                Welcome to the Bored Ape Yacht Club
+              </h1>
+              <button className="bg-swamp rounded-md w-full h-12">
+                <p className="bg-swamp text-black font-bold">Enter</p>
+              </button>
+            </div>
+            <div className="w-3/12 text-center">Scroll</div>
+          </div>
+        </div>
+      </div>
+      <div className="w-11/12 mx-auto h-fit mb-5">
+        <p className="px-5 py-10 normal-case w-8/12 border-b border-b-white">
+          {QuickDesc}
+        </p>
+      </div>
+    </>
+  );
 }
 
 export default LandingPage;

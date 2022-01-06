@@ -1,6 +1,7 @@
 * {
   background-color: black;
   color: white;
+  text-transform: uppercase;
 }
 @tailwind base;
 @tailwind components;
