@@ -4,14 +4,7 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 import { ethers } from "hardhat";
-
-const deploySVG = async () => {
-  const SVG = await ethers.getContractFactory("SVGNFT");
-  const svgDeploy = await SVG.deploy();
-
-  await svgDeploy.deployed();
-  console.log("SVGNFT deployed to ", svgDeploy.address);
-};
+import fs from "fs";
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -28,8 +21,23 @@ async function main() {
   // await greeter.deployed();
 
   // console.log("Greeter deployed to:", greeter.address);
+  const SVG = await ethers.getContractFactory("SVGNFT");
+  const svgDeploy = await SVG.deploy();
 
-  deploySVG();
+  await svgDeploy.deployed();
+  console.log("SVGNFT deployed to ", svgDeploy.address);
+
+  let fPath = __dirname + "/blob.svg";
+  let svg = fs.readFileSync(fPath, { encoding: "utf8" });
+
+  const [minter] = await ethers.getSigners();
+
+  await svgDeploy
+    .connect(minter)
+    .create(svg, { value: ethers.utils.parseUnits("0.01", "ether") });
+
+  const tokenURI = await svgDeploy.tokenURI(0);
+  console.log(tokenURI);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

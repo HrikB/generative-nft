@@ -13,7 +13,7 @@ contract SVGNFT is ERC721URIStorage {
     constructor() ERC721("ONCHAIN NFT", "ONCH") {}
 
     function create(string memory svg) public payable {
-        require(price <= msg.value);
+        require(price <= msg.value, "Ether value sent is not correct");
         uint256 mintIndex = totalSupply();
         _safeMint(msg.sender, mintIndex);
         string memory imageURI = _svgToImageURI(svg);
@@ -42,13 +42,13 @@ contract SVGNFT is ERC721URIStorage {
         view
         returns (string memory)
     {
-        string memory baseURL = "data:application/json;base64";
+        string memory baseURL = "data:application/json;base64,";
         string memory json = Base64.encode(
             bytes(
                 abi.encodePacked(
-                    '{"name": ',
+                    '{"name": "',
                     ERC721.name(),
-                    ', "description": "{desc}", "attributes": "", "image": ',
+                    '", "description": "{desc}", "attributes": "", "image": "',
                     imageURI,
                     '"}'
                 )

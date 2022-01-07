@@ -443,8 +443,8 @@
       ]
     },
     "/home/EthProjects/generative-nft/contracts/SVGNFT.sol": {
-      "lastModificationDate": 1641589194450,
-      "contentHash": "48e28b02d5687a8a112b5c351b6c263f",
+      "lastModificationDate": 1641591167550,
+      "contentHash": "3b75e73b16d2b151ca8771ea076287ae",
       "sourceName": "contracts/SVGNFT.sol",
       "solcConfig": {
         "version": "0.8.4",
