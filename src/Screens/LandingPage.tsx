@@ -11,7 +11,7 @@ function LandingPage() {
   return (
     <>
       <div className="relative mt-16">
-        <div className="w-11/12 mx-auto h-fit mb-5">
+        <div className="w-11/12 mx-auto h-fit mb-5 animate-floating-fade-in">
           <video autoPlay loop className="w-full" src={LandingVid} />
           <div className="absolute bottom-0 bg-black w-96 h-2/6 flex">
             <div className="w-9/12 mx-2 border-b-white border-b h-full flex justify-center flex-col">
@@ -26,7 +26,7 @@ function LandingPage() {
               </button>
             </div>
             <div className="relative w-3/12">
-              <p className="animate-pulsefull  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap font-display font-medium italic text-scroll">
+              <p className="animate-pulsefull absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap font-display font-medium italic text-scroll">
                 ← SCROLL DOWN
               </p>
             </div>

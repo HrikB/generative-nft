@@ -10,10 +10,19 @@ module.exports = {
           '50%': {
             opacity: .1
           }
-        }
+        },
+        "floating-fade-in": {
+          "0%": {
+            transform: "translate(0, 30px)",
+            opacity: 0
+          },
+          "100%": { transform: "translate(0, 0px)", opacity: 1 },
+        },
+
       },
       animation: {
-        pulsefull: 'pulsefull 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;'
+        pulsefull: 'pulsefull 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;',
+        "floating-fade-in": 'floating-fade-in .4s ;',
       },
       colors: {
         'swamp': '#cccc00'
