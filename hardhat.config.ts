@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import { HardhatUserConfig, task } from "hardhat/config";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
+import "hardhat-deploy";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
@@ -30,6 +31,12 @@ const config: HardhatUserConfig = {
       url: process.env.ROPSTEN_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    rinkeby: {
+      url: process.env.RINKEBY_URL,
+      accounts: [
+        "0xa8792668c83891b49ddd16ab0a6168c29b7ebb1895122c6d39c6f32ee60545ea",
+      ],
     },
   },
   gasReporter: {

@@ -19,12 +19,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -54,12 +61,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -91,12 +105,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -109,7 +130,7 @@
       ]
     },
     "/home/EthProjects/generative-nft/contracts/ERC721/extensions/IERC721Metadata.sol": {
-      "lastModificationDate": 1640295025470,
+      "lastModificationDate": 1640667830877,
       "contentHash": "178f4f0421fa5262b360c6acb2e651bb",
       "sourceName": "contracts/ERC721/extensions/IERC721Metadata.sol",
       "solcConfig": {
@@ -126,12 +147,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -163,12 +191,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -198,12 +233,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -233,12 +275,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -268,12 +317,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -305,12 +361,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -340,12 +403,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -378,12 +448,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -423,12 +500,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -443,8 +527,8 @@
       ]
     },
     "/home/EthProjects/generative-nft/contracts/SVGNFT.sol": {
-      "lastModificationDate": 1641591167550,
-      "contentHash": "3b75e73b16d2b151ca8771ea076287ae",
+      "lastModificationDate": 1641597097888,
+      "contentHash": "5a299215ac2d285a34c3e1e72dccdd9b",
       "sourceName": "contracts/SVGNFT.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -460,19 +544,25 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
       "imports": [
         "./ERC721/ERC721URIStorage.sol",
-        "base64-sol/base64.sol",
-        "hardhat/console.sol"
+        "base64-sol/base64.sol"
       ],
       "versionPragmas": [
         "^0.8.0"
@@ -499,12 +589,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -536,12 +633,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },

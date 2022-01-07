@@ -3,7 +3,6 @@ pragma solidity ^0.8.0;
 
 import "./ERC721/ERC721URIStorage.sol";
 import "base64-sol/base64.sol";
-import "hardhat/console.sol";
 
 contract SVGNFT is ERC721URIStorage {
     uint256 public constant price = 0.01 ether;
