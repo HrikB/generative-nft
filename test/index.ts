@@ -1,9 +1,9 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
-import { ethers, waffle } from "hardhat";
+import { ethers } from "hardhat";
 import { ERC721, GenArt, GenArt__factory } from "../typechain";
 
-const { utils, constants } = ethers;
+const { constants } = ethers;
 // describe("Greeter", function () {
 //   it("Should return the new greeting once it's changed", async function () {
 //     const Greeter = await ethers.getContractFactory("Greeter");
@@ -81,7 +81,7 @@ let accounts;
 let minter1: SignerWithAddress;
 let minter2: SignerWithAddress;
 let minter3: SignerWithAddress;
-const provider = waffle.provider;
+// const provider = waffle.provider;
 describe("GenArt", function () {
   beforeEach(async () => {
     GenArtContr = await ethers.getContractFactory("GenArt");
@@ -253,10 +253,10 @@ describe("GenArt", function () {
     });
 
     it("Should store token owners in _owners mapping", async () => {
-      const filter = {
-        address: genArtDeploy.address,
-        topics: [utils.id("Transfer(address,address,uint256)")],
-      };
+      // const filter = {
+      //   address: genArtDeploy.address,
+      //   topics: [utils.id("Transfer(address,address,uint256)")],
+      // };
 
       for (let i = 0; i <= amount1 + amount2; i++) {
         if (i == amount1 + amount2) return;

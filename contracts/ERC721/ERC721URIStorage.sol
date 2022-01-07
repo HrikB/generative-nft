@@ -3,7 +3,7 @@
 
 pragma solidity ^0.8.0;
 
-import "../ERC721.sol";
+import "./ERC721.sol";
 
 /**
  * @dev ERC721 token with storage based token URI management.
@@ -37,8 +37,8 @@ abstract contract ERC721URIStorage is ERC721 {
             return _tokenURI;
         }
         // If both are set, concatenate the baseURI and tokenURI (via abi.encodePacked).
-        if(bytes(_tokenURI).length > 0) {
-            return string(abi.encodePacked(base, _tokenURI);)
+        if (bytes(_tokenURI).length > 0) {
+            return string(abi.encodePacked(base, _tokenURI));
         }
 
         return super.tokenURI(tokenId);
@@ -51,10 +51,16 @@ abstract contract ERC721URIStorage is ERC721 {
      *
      * - `tokenId` must exist.
      */
-     function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal virtual {
-         require(_exists(tokenId), "ERC721Storage: URI set of nonexistent token");
-         _tokenURIs[tokenId] = _tokenURI;
-     }
+    function _setTokenURI(uint256 tokenId, string memory _tokenURI)
+        internal
+        virtual
+    {
+        require(
+            _exists(tokenId),
+            "ERC721Storage: URI set of nonexistent token"
+        );
+        _tokenURIs[tokenId] = _tokenURI;
+    }
 
     /**
      * @dev Destroys `tokenId`.
@@ -66,10 +72,10 @@ abstract contract ERC721URIStorage is ERC721 {
      *
      * Emits a {Transfer} event.
      */
-     function _burn(uint256 tokenId) internal virtual override {
-         super._burn(tokenId);
-         if (bytes(_tokenURIs[tokenId].length != 0)) {
-             delete _tokenURIs[tokenId];
-         }
-     }
+    function _burn(uint256 tokenId) internal virtual override {
+        super._burn(tokenId);
+        if (bytes(_tokenURIs[tokenId]).length != 0) {
+            delete _tokenURIs[tokenId];
+        }
+    }
 }
