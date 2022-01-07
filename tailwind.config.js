@@ -33,7 +33,8 @@ module.exports = {
     },
     fontSize: {
       'landing-title': '1.7em',
-      'scroll': "11.2px"
+      'scroll': "11.2px",
+      'xxs': ".5rem"
     },
     fontFamily: {
       'display': ['Montserrat']
