@@ -41,7 +41,9 @@ const config: HardhatUserConfig = {
       },
     ],
   },
+  defaultNetwork: "hardhat",
   networks: {
+    hardhat: {},
     ropsten: {
       url: process.env.ROPSTEN_URL || "",
       accounts:
@@ -52,6 +54,15 @@ const config: HardhatUserConfig = {
       accounts: [
         "0xa8792668c83891b49ddd16ab0a6168c29b7ebb1895122c6d39c6f32ee60545ea",
       ],
+    },
+  },
+  namedAccounts: {
+    deployer: {
+      default: 1, // here this will by default take the first account as deployer
+      1: 0, // similarly on mainnet it will take the first account as deployer. Note though that depending on how hardhat network are configured, the account 0 on one network can be different than on another
+    },
+    feeCollector: {
+      default: 1,
     },
   },
   gasReporter: {

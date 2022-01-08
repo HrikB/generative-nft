@@ -2,7 +2,16 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { LinkTokenInterface } from "./LinkTokenInterface";
+export type { VRFCoordinatorMock } from "./VRFCoordinatorMock";
 export type { VRFConsumerBase } from "./VRFConsumerBase";
+export type { ERC677Token } from "./ERC677Token";
+export type { LinkToken } from "./LinkToken";
+export type { ERC677 } from "./ERC677";
+export type { ERC677Receiver } from "./ERC677Receiver";
+export type { LinkBasicToken } from "./LinkBasicToken";
+export type { LinkERC20 } from "./LinkERC20";
+export type { LinkERC20Basic } from "./LinkERC20Basic";
+export type { LinkStandardToken } from "./LinkStandardToken";
 export type { ERC721 } from "./ERC721";
 export type { ERC721URIStorage } from "./ERC721URIStorage";
 export type { IERC721Enumerable } from "./IERC721Enumerable";
@@ -15,7 +24,16 @@ export type { GenArt } from "./GenArt";
 export type { SVGNFT } from "./SVGNFT";
 
 export { LinkTokenInterface__factory } from "./factories/LinkTokenInterface__factory";
+export { VRFCoordinatorMock__factory } from "./factories/VRFCoordinatorMock__factory";
 export { VRFConsumerBase__factory } from "./factories/VRFConsumerBase__factory";
+export { ERC677Token__factory } from "./factories/ERC677Token__factory";
+export { LinkToken__factory } from "./factories/LinkToken__factory";
+export { ERC677__factory } from "./factories/ERC677__factory";
+export { ERC677Receiver__factory } from "./factories/ERC677Receiver__factory";
+export { LinkBasicToken__factory } from "./factories/LinkBasicToken__factory";
+export { LinkERC20__factory } from "./factories/LinkERC20__factory";
+export { LinkERC20Basic__factory } from "./factories/LinkERC20Basic__factory";
+export { LinkStandardToken__factory } from "./factories/LinkStandardToken__factory";
 export { ERC721__factory } from "./factories/ERC721__factory";
 export { ERC721URIStorage__factory } from "./factories/ERC721URIStorage__factory";
 export { IERC721Enumerable__factory } from "./factories/IERC721Enumerable__factory";
