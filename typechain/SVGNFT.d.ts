@@ -24,14 +24,22 @@ interface SVGNFTInterface extends ethers.utils.Interface {
   functions: {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
-    "create(string)": FunctionFragment;
+    "colors(uint256)": FunctionFragment;
+    "create()": FunctionFragment;
+    "fee()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "keyHash()": FunctionFragment;
+    "maxPathCommands()": FunctionFragment;
+    "maxPaths()": FunctionFragment;
     "name()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
+    "pathCommands(uint256)": FunctionFragment;
     "price()": FunctionFragment;
+    "rawFulfillRandomness(bytes32,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
+    "size()": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "tokenByIndex(uint256)": FunctionFragment;
@@ -46,7 +54,12 @@ interface SVGNFTInterface extends ethers.utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-  encodeFunctionData(functionFragment: "create", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "colors",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "create", values?: undefined): string;
+  encodeFunctionData(functionFragment: "fee", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
@@ -55,12 +68,26 @@ interface SVGNFTInterface extends ethers.utils.Interface {
     functionFragment: "isApprovedForAll",
     values: [string, string]
   ): string;
+  encodeFunctionData(functionFragment: "keyHash", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "maxPathCommands",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "maxPaths", values?: undefined): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "pathCommands",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "price", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "rawFulfillRandomness",
+    values: [BytesLike, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom",
     values: [string, string, BigNumberish]
@@ -69,6 +96,7 @@ interface SVGNFTInterface extends ethers.utils.Interface {
     functionFragment: "setApprovalForAll",
     values: [string, boolean]
   ): string;
+  encodeFunctionData(functionFragment: "size", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
@@ -97,7 +125,9 @@ interface SVGNFTInterface extends ethers.utils.Interface {
 
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "colors", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "create", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "fee", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
@@ -106,9 +136,23 @@ interface SVGNFTInterface extends ethers.utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "keyHash", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "maxPathCommands",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "maxPaths", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "pathCommands",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "rawFulfillRandomness",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "safeTransferFrom",
     data: BytesLike
@@ -117,6 +161,7 @@ interface SVGNFTInterface extends ethers.utils.Interface {
     functionFragment: "setApprovalForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "size", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike
@@ -144,13 +189,17 @@ interface SVGNFTInterface extends ethers.utils.Interface {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "CreatedNFT(uint256,string)": EventFragment;
+    "CreatedUnfinishedRandomSVG(uint256,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
+    "requestedRandomSVG(bytes32,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "CreatedNFT"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CreatedUnfinishedRandomSVG"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "requestedRandomSVG"): EventFragment;
 }
 
 export type ApprovalEvent = TypedEvent<
@@ -173,8 +222,16 @@ export type CreatedNFTEvent = TypedEvent<
   [BigNumber, string] & { tokenId: BigNumber; tokenURI: string }
 >;
 
+export type CreatedUnfinishedRandomSVGEvent = TypedEvent<
+  [BigNumber, BigNumber] & { tokenId: BigNumber; randomNumber: BigNumber }
+>;
+
 export type TransferEvent = TypedEvent<
   [string, string, BigNumber] & { from: string; to: string; tokenId: BigNumber }
+>;
+
+export type requestedRandomSVGEvent = TypedEvent<
+  [string, BigNumber] & { requestId: string; tokenId: BigNumber }
 >;
 
 export class SVGNFT extends BaseContract {
@@ -229,10 +286,13 @@ export class SVGNFT extends BaseContract {
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    colors(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+
     create(
-      svg: string,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    fee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -245,6 +305,12 @@ export class SVGNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    keyHash(overrides?: CallOverrides): Promise<[string]>;
+
+    maxPathCommands(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    maxPaths(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
@@ -252,7 +318,18 @@ export class SVGNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    pathCommands(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     price(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    rawFulfillRandomness(
+      requestId: BytesLike,
+      randomness: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -274,6 +351,8 @@ export class SVGNFT extends BaseContract {
       approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    size(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -316,10 +395,13 @@ export class SVGNFT extends BaseContract {
 
   balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  colors(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
   create(
-    svg: string,
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  fee(overrides?: CallOverrides): Promise<BigNumber>;
 
   getApproved(
     tokenId: BigNumberish,
@@ -332,11 +414,25 @@ export class SVGNFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  keyHash(overrides?: CallOverrides): Promise<string>;
+
+  maxPathCommands(overrides?: CallOverrides): Promise<BigNumber>;
+
+  maxPaths(overrides?: CallOverrides): Promise<BigNumber>;
+
   name(overrides?: CallOverrides): Promise<string>;
 
   ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  pathCommands(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
   price(overrides?: CallOverrides): Promise<BigNumber>;
+
+  rawFulfillRandomness(
+    requestId: BytesLike,
+    randomness: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   "safeTransferFrom(address,address,uint256)"(
     from: string,
@@ -358,6 +454,8 @@ export class SVGNFT extends BaseContract {
     approved: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  size(overrides?: CallOverrides): Promise<BigNumber>;
 
   supportsInterface(
     interfaceId: BytesLike,
@@ -397,7 +495,11 @@ export class SVGNFT extends BaseContract {
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    create(svg: string, overrides?: CallOverrides): Promise<void>;
+    colors(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    create(overrides?: CallOverrides): Promise<string>;
+
+    fee(overrides?: CallOverrides): Promise<BigNumber>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -410,11 +512,28 @@ export class SVGNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    keyHash(overrides?: CallOverrides): Promise<string>;
+
+    maxPathCommands(overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxPaths(overrides?: CallOverrides): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+    pathCommands(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     price(overrides?: CallOverrides): Promise<BigNumber>;
+
+    rawFulfillRandomness(
+      requestId: BytesLike,
+      randomness: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -436,6 +555,8 @@ export class SVGNFT extends BaseContract {
       approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    size(overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -520,6 +641,22 @@ export class SVGNFT extends BaseContract {
       { tokenId: BigNumber; tokenURI: string }
     >;
 
+    "CreatedUnfinishedRandomSVG(uint256,uint256)"(
+      tokenId?: BigNumberish | null,
+      randomNumber?: null
+    ): TypedEventFilter<
+      [BigNumber, BigNumber],
+      { tokenId: BigNumber; randomNumber: BigNumber }
+    >;
+
+    CreatedUnfinishedRandomSVG(
+      tokenId?: BigNumberish | null,
+      randomNumber?: null
+    ): TypedEventFilter<
+      [BigNumber, BigNumber],
+      { tokenId: BigNumber; randomNumber: BigNumber }
+    >;
+
     "Transfer(address,address,uint256)"(
       from?: string | null,
       to?: string | null,
@@ -537,6 +674,22 @@ export class SVGNFT extends BaseContract {
       [string, string, BigNumber],
       { from: string; to: string; tokenId: BigNumber }
     >;
+
+    "requestedRandomSVG(bytes32,uint256)"(
+      requestId?: BytesLike | null,
+      tokenId?: BigNumberish | null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { requestId: string; tokenId: BigNumber }
+    >;
+
+    requestedRandomSVG(
+      requestId?: BytesLike | null,
+      tokenId?: BigNumberish | null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { requestId: string; tokenId: BigNumber }
+    >;
   };
 
   estimateGas: {
@@ -548,10 +701,13 @@ export class SVGNFT extends BaseContract {
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    colors(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
     create(
-      svg: string,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    fee(overrides?: CallOverrides): Promise<BigNumber>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -564,6 +720,12 @@ export class SVGNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    keyHash(overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxPathCommands(overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxPaths(overrides?: CallOverrides): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
@@ -571,7 +733,18 @@ export class SVGNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    pathCommands(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     price(overrides?: CallOverrides): Promise<BigNumber>;
+
+    rawFulfillRandomness(
+      requestId: BytesLike,
+      randomness: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -593,6 +766,8 @@ export class SVGNFT extends BaseContract {
       approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    size(overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -639,10 +814,16 @@ export class SVGNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    colors(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     create(
-      svg: string,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    fee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -655,6 +836,12 @@ export class SVGNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    keyHash(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxPathCommands(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxPaths(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
@@ -662,7 +849,18 @@ export class SVGNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    pathCommands(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    rawFulfillRandomness(
+      requestId: BytesLike,
+      randomness: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -684,6 +882,8 @@ export class SVGNFT extends BaseContract {
       approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    size(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,

@@ -527,8 +527,8 @@
       ]
     },
     "/home/EthProjects/generative-nft/contracts/SVGNFT.sol": {
-      "lastModificationDate": 1641597097888,
-      "contentHash": "5a299215ac2d285a34c3e1e72dccdd9b",
+      "lastModificationDate": 1641623489759,
+      "contentHash": "0b5c4919cc2e86ea21c02974ddd5d0ee",
       "sourceName": "contracts/SVGNFT.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -562,6 +562,7 @@
       },
       "imports": [
         "./ERC721/ERC721URIStorage.sol",
+        "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol",
         "base64-sol/base64.sol"
       ],
       "versionPragmas": [
@@ -655,6 +656,135 @@
       ],
       "artifacts": [
         "Base64"
+      ]
+    },
+    "/home/EthProjects/generative-nft/node_modules/@chainlink/contracts/src/v0.8/VRFConsumerBase.sol": {
+      "lastModificationDate": 1641611626889,
+      "contentHash": "a70ea296de2000548ba2211a166432fe",
+      "sourceName": "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/LinkTokenInterface.sol",
+        "./VRFRequestIDBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VRFConsumerBase"
+      ]
+    },
+    "/home/EthProjects/generative-nft/node_modules/@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol": {
+      "lastModificationDate": 1641611626949,
+      "contentHash": "da5a0c3bd86c896f6a407f909c57edf3",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "LinkTokenInterface"
+      ]
+    },
+    "/home/EthProjects/generative-nft/node_modules/@chainlink/contracts/src/v0.8/VRFRequestIDBase.sol": {
+      "lastModificationDate": 1641611626889,
+      "contentHash": "e7fc1c36cb6d9f4b7d64c59dfd2c6211",
+      "sourceName": "@chainlink/contracts/src/v0.8/VRFRequestIDBase.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VRFRequestIDBase"
       ]
     }
   }
