@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import "./ERC721/ERC721URIStorage.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 import "base64-sol/base64.sol";
+import "hardhat/console.sol";
 
 contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
     using Strings for uint256;
@@ -85,7 +86,8 @@ contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
 
         uint256 randomNumber = tokenIdToRandomNumber[_tokenId];
         string memory svg = generateSVG(randomNumber);
-        string memory imageURI = _svgToImageURI("");
+        console.log(svg);
+        string memory imageURI = _svgToImageURI(svg);
         string memory tokenURI = _formatTokenURI(imageURI);
         _setTokenURI(_tokenId, tokenURI);
         emit CreatedNFT(_tokenId, svg);
@@ -97,6 +99,7 @@ contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
     {
         uint256 numberOfPaths = (_randomNumber % maxPaths) + 1;
         //opening svg tag
+        console.log("size", size.toString());
         finalSvg = string(
             abi.encodePacked(
                 "<svg xmlns='http://www.w3.org/2000/svg' height='",
@@ -123,20 +126,22 @@ contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
         returns (string memory pathSvg)
     {
         uint256 numberOfPathCommands = (_randomNumber % maxPathCommands) + 1;
-        pathSvg = "<path d='";
+        pathSvg = "";
         for (uint256 i = 0; i < numberOfPathCommands; i++) {
             uint256 newRNG = uint256(
                 keccak256(abi.encode(_randomNumber, size + i))
             );
             string memory pathCommand = generatePathCommand(newRNG);
-            pathSvg = string(abi.encodePacked(pathSvg, pathCommand));
+            pathSvg = string(
+                abi.encodePacked(pathSvg, "<path d='", pathCommand)
+            );
             string memory color = colors[_randomNumber % colors.length];
             pathSvg = string(
                 abi.encodePacked(
                     pathSvg,
                     "' fill='transparent' stroke='",
                     color,
-                    "'>"
+                    "'/>"
                 )
             );
         }

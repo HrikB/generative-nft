@@ -527,8 +527,8 @@
       ]
     },
     "/home/EthProjects/generative-nft/contracts/SVGNFT.sol": {
-      "lastModificationDate": 1641740640681,
-      "contentHash": "c09a8520ea52b21fa369ec1ee8819906",
+      "lastModificationDate": 1641743737871,
+      "contentHash": "8f70b3297f91c914d07e3b55c01a40b6",
       "sourceName": "contracts/SVGNFT.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -563,7 +563,8 @@
       "imports": [
         "./ERC721/ERC721URIStorage.sol",
         "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol",
-        "base64-sol/base64.sol"
+        "base64-sol/base64.sol",
+        "hardhat/console.sol"
       ],
       "versionPragmas": [
         "^0.8.0"

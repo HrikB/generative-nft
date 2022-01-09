@@ -79,12 +79,12 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     );
     let vrf_tx = await vrfCoordinator.callBackWithRandomness(
       receipt.logs[3].topics[1],
-      777777,
+      77777,
       SVGNFT.address
     );
     await vrf_tx.wait(1);
     log("Now mint can be finished off");
-    let finish_tx = await svg.completeCreate(tokenId, { gasLimit: 2000000 });
+    let finish_tx = await svg.completeCreate(tokenId, { gasLimit: 3000000 });
     await finish_tx.wait(1);
     log(`You can view the tokenURI here: ${await svg.tokenURI(tokenId)}`);
   }
