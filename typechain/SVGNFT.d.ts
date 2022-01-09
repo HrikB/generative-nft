@@ -25,6 +25,7 @@ interface SVGNFTInterface extends ethers.utils.Interface {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "colors(uint256)": FunctionFragment;
+    "completeCreate(uint256)": FunctionFragment;
     "create()": FunctionFragment;
     "fee()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
@@ -56,6 +57,10 @@ interface SVGNFTInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "colors",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "completeCreate",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "create", values?: undefined): string;
@@ -126,6 +131,10 @@ interface SVGNFTInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "colors", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "completeCreate",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "create", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "fee", data: BytesLike): Result;
   decodeFunctionResult(
@@ -288,6 +297,11 @@ export class SVGNFT extends BaseContract {
 
     colors(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
+    completeCreate(
+      _tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     create(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -397,6 +411,11 @@ export class SVGNFT extends BaseContract {
 
   colors(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  completeCreate(
+    _tokenId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   create(
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -496,6 +515,11 @@ export class SVGNFT extends BaseContract {
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     colors(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    completeCreate(
+      _tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     create(overrides?: CallOverrides): Promise<string>;
 
@@ -703,6 +727,11 @@ export class SVGNFT extends BaseContract {
 
     colors(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
+    completeCreate(
+      _tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     create(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -817,6 +846,11 @@ export class SVGNFT extends BaseContract {
     colors(
       arg0: BigNumberish,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    completeCreate(
+      _tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     create(

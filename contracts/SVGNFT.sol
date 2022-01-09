@@ -72,7 +72,7 @@ contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
         emit CreatedUnfinishedRandomSVG(tokenId, randomNumber);
     }
 
-    function completeCreate(uint256 _tokenId) private {
+    function completeCreate(uint256 _tokenId) external {
         require(
             bytes(tokenURI(_tokenId)).length <= 0,
             "SVGNFT: tokenURI is already all set!"
