@@ -126,25 +126,23 @@ contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
         returns (string memory pathSvg)
     {
         uint256 numberOfPathCommands = (_randomNumber % maxPathCommands) + 1;
-        pathSvg = "";
+        pathSvg = "<path d='";
         for (uint256 i = 0; i < numberOfPathCommands; i++) {
             uint256 newRNG = uint256(
                 keccak256(abi.encode(_randomNumber, size + i))
             );
             string memory pathCommand = generatePathCommand(newRNG);
-            pathSvg = string(
-                abi.encodePacked(pathSvg, "<path d='", pathCommand)
-            );
-            string memory color = colors[_randomNumber % colors.length];
-            pathSvg = string(
-                abi.encodePacked(
-                    pathSvg,
-                    "' fill='transparent' stroke='",
-                    color,
-                    "'/>"
-                )
-            );
+            pathSvg = string(abi.encodePacked(pathSvg, pathCommand));
         }
+        string memory color = colors[_randomNumber % colors.length];
+        pathSvg = string(
+            abi.encodePacked(
+                pathSvg,
+                "' fill='transparent' stroke='",
+                color,
+                "'/>"
+            )
+        );
     }
 
     function generatePathCommand(uint256 _randomNumber)
