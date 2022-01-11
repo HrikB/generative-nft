@@ -42,7 +42,7 @@ contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
         uint256 _fee
     )
         VRFConsumerBase(_VRFCoordinator, _linkToken)
-        ERC721("RandomSVG", "RSVG ")
+        ERC721("ONCHAIN NFT", "ONCH ")
     {
         fee = _fee;
         keyHash = _keyhash;
@@ -86,8 +86,8 @@ contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
 
         uint256 randomNumber = tokenIdToRandomNumber[_tokenId];
         string memory svg = generateSVG(randomNumber);
-        console.log(svg);
         string memory imageURI = _svgToImageURI(svg);
+        console.log(imageURI);
         string memory tokenURI = _formatTokenURI(imageURI);
         _setTokenURI(_tokenId, tokenURI);
         emit CreatedNFT(_tokenId, svg);
@@ -99,7 +99,6 @@ contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
     {
         uint256 numberOfPaths = (_randomNumber % maxPaths) + 1;
         //opening svg tag
-        console.log("size", size.toString());
         finalSvg = string(
             abi.encodePacked(
                 "<svg xmlns='http://www.w3.org/2000/svg' height='",
@@ -136,12 +135,7 @@ contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
         }
         string memory color = colors[_randomNumber % colors.length];
         pathSvg = string(
-            abi.encodePacked(
-                pathSvg,
-                "' fill='transparent' stroke='",
-                color,
-                "'/>"
-            )
+            abi.encodePacked(pathSvg, "' fill='orange' stroke='", color, "'/>")
         );
     }
 

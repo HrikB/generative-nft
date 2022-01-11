@@ -44,13 +44,14 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   );
 
   //Funding with LINK
-  const linkTokenContract = await ethers.getContractFactory("LinkToken");
   const [signer] = await ethers.getSigners();
+  const linkTokenContract = await ethers.getContractFactory("LinkToken");
   const linkToken = new ethers.Contract(
     linkTokenAddress,
     linkTokenContract.interface,
     signer
   );
+
   let fund_tx = await linkToken.transfer(SVGNFT.address, fee);
   await fund_tx.wait(1);
 
@@ -61,15 +62,25 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     SVGNFTContract.interface,
     signer
   );
+
   let creation_tx = await svg.create({
     gasLimit: 300000,
     value: ethers.utils.parseUnits("0.01", "ether"),
   });
   let receipt = await creation_tx.wait(1); //tokenId is an indexed topic
+
   let tokenId = receipt.events[3].topics[2];
   log(`NFT minted! Token ID: ${tokenId}`);
   log(`Let's wait for the chainlink to respond... `);
+
   if (chainId !== "31337") {
+    console.log("requestId");
+    await new Promise((resolve) => setTimeout(resolve, 180000));
+
+    let finish_tx = await svg.completeCreate(tokenId, { gasLimit: 3000000 });
+    await finish_tx.wait(1);
+
+    log(`You can view the tokenURI here: ${await svg.tokenURI(tokenId)}`);
   } else {
     const VRFCoordinatorMock = await deployments.get("VRFCoordinatorMock");
     const vrfCoordinator = await ethers.getContractAt(
@@ -77,15 +88,19 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
       VRFCoordinatorMock.address,
       signer
     );
+
     let vrf_tx = await vrfCoordinator.callBackWithRandomness(
       receipt.logs[3].topics[1],
       77777,
       SVGNFT.address
     );
+
     await vrf_tx.wait(1);
     log("Now mint can be finished off");
+
     let finish_tx = await svg.completeCreate(tokenId, { gasLimit: 3000000 });
     await finish_tx.wait(1);
+
     log(`You can view the tokenURI here: ${await svg.tokenURI(tokenId)}`);
   }
 };
