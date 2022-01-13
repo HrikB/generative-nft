@@ -87,7 +87,6 @@ contract SVGNFT is ERC721URIStorage, VRFConsumerBase {
         uint256 randomNumber = tokenIdToRandomNumber[_tokenId];
         string memory svg = generateSVG(randomNumber);
         string memory imageURI = _svgToImageURI(svg);
-        console.log(imageURI);
         string memory tokenURI = _formatTokenURI(imageURI);
         _setTokenURI(_tokenId, tokenURI);
         emit CreatedNFT(_tokenId, svg);

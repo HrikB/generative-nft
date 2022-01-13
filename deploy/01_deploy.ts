@@ -74,7 +74,6 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   log(`Let's wait for the chainlink to respond... `);
 
   if (chainId !== "31337") {
-    console.log("requestId");
     await new Promise((resolve) => setTimeout(resolve, 180000));
 
     let finish_tx = await svg.completeCreate(tokenId, { gasLimit: 3000000 });
