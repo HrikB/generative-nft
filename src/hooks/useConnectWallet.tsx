@@ -21,3 +21,5 @@ export const useConnectWallet = () => {
 
   return provider;
 };
+
+export default useConnectWallet;
